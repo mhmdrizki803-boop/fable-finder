@@ -1,42 +1,18 @@
-# Alibi — a voice murder mystery
+[![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
-Four suspects, one interview at a time. Ask out loud, catch the contradictions, then name the killer. Every case is written fresh the moment you press **New case**.
+# Fable Finder
 
-**[Play Alibi](https://mhmdrizzzki.github.io/voice-mystery/)**
+Type the lesson you keep forgetting and get a four line fable with a picture, written on the spot.
 
-## What happens in a case
+**Live:** https://mhmdrizki803-boop.github.io/fable-finder/
 
-- A text model writes the case: a victim, a place, and four suspects with their own voice — one of them is lying.
-- You interview by typing, or by recording the question; speech recognition turns your voice into the question.
-- Each suspect answers in character and the answer is spoken back to you with `POST /v1/audio/speech`, one voice per suspect.
-- The notebook keeps every claim, so contradictions surface while you play. The whole case travels with every question, so a guilty suspect stays consistent and a truthful one stops making sense.
-- Accuse when you are ready. The real story is revealed either way, then a whole new case.
+## What it does
 
-## Bring your own Pollen
+- The lesson goes to a text model, which returns a title, exactly four lines, a moral, and the one line prompt an illustrator would need.
+- An image model draws that picture on the spot, so every fable gets its own illustration.
+- **Read it aloud** sends the same words to a voice model, so the fable works with your eyes closed.
+- **Keep this one** saves the fable to a shelf in your browser. Nothing is uploaded anywhere else.
 
-Press *Sign in with Pollinations* and allow `voice-mystery`: the sign-in is a plain OAuth + PKCE loop in the browser, there is no backend and no proxy. Your own Pollen pays for the case, for every answer and for every voice you hear.
+## How it uses Pollinations
 
-## How it works
-
-```js
-// the suspect answers in character, with the case in the prompt
-const r = await fetch("https://gen.pollinations.ai/v1/chat/completions", {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-  body: JSON.stringify({ model: TEXT_MODEL, messages: [
-    { role: "system", content: suspectSystem(suspect) },
-    { role: "user", content: "The detective asks: " + question }] })
-});
-
-// and the same answer is spoken back with that suspect's own voice
-const voice = await fetch("https://gen.pollinations.ai/v1/audio/speech", {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-  body: JSON.stringify({ model: "openai/tts-1", voice: suspect.voice,
-    input: answer, response_format: "mp3" })
-});
-```
-
-## Screenshots
-
-![A case in progress](docs/screenshot-case.png)
+Bring your own Pollen: signing in is a plain OAuth + PKCE loop in the browser, and the player's own Pollen pays for the writing (`/v1/chat/completions`), the picture (`/image/{prompt}`) and the voice (`/v1/audio/speech`). Nothing is proxied through a server of ours, the page is static and talks straight to `gen.pollinations.ai`.
