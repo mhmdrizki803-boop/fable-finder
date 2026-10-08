@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fable Finder - a lesson with a picture</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Fable Finder</h1>
+  <p class="tag">Type the lesson you keep forgetting and get a four line fable with a picture, written on the spot. One button reads it out loud.</p>
+</header>
+<main>
+  <section class="panel">
+    <label class="lbl" for="lesson">The lesson, in your own words</label>
+    <textarea id="lesson" placeholder="slow and steady wins the race"></textarea>
+    <label class="lbl" for="tone">Tell it as</label>
+    <select id="tone">
+      <option value="0">a gentle village tale</option>
+      <option value="1">a wry modern parable</option>
+      <option value="2">a dark forest warning</option>
+      <option value="3">a seaside yarn</option>
+    </select>
+    <div class="row">
+      <button id="tell">Tell me a fable</button>
+      <button id="read" class="ghost">Read it aloud</button>
+      <button id="signin" class="ghost">Sign in with Pollinations</button>
+    </div>
+    <p id="status" class="dim">Signing in is a plain OAuth + PKCE loop in your browser, and your own Pollen pays for the writing and the picture. Nothing is proxied.</p>
+  </section>
+
+  <section id="fablebox" class="panel" hidden>
+    <h2 id="ftitle"></h2>
+    <img id="fimg" alt="illustration of the fable" hidden>
+    <div id="ftext" class="fable"></div>
+    <p id="fmoral" class="moral"></p>
+    <div class="row">
+      <button id="keep" class="ghost">Keep this one</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Kept fables</h2>
+    <div id="shelf" class="shelf"></div>
+  </section>
+
+  <section class="panel">
+    <h2>What it actually does</h2>
+    <ul class="facts">
+      <li>A text model turns your lesson into a title, four short lines and a moral, and it also writes the one line prompt for the picture.</li>
+      <li>An image model draws that picture on the spot, so no two fables look alike.</li>
+      <li>The read aloud button sends the same words to a voice model, so the fable works with your eyes closed.</li>
+      <li>Kept fables live in this browser only. Nothing is uploaded anywhere else.</li>
+    </ul>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
